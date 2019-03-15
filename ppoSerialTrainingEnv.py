@@ -1,4 +1,5 @@
 import retro
+import os.path
 
 from stable_baselines.common.policies import CnnLstmPolicy
 from stable_baselines.common.vec_env import SubprocVecEnv
@@ -15,7 +16,7 @@ def callback(_locals,  _globals):
 n_cpu = 12
 env = SubprocVecEnv([lambda: retro.make('Airstriker-Genesis') for i in range(n_cpu)])
 
-model = PPO2(CnnLstmPolicy, env, verbose=1, tensorboard_log='./airstriker_ppo_cnnlstmpolicy')
+model = PPO2(CnnLstmPolicy, env, verbose=1, tensorboard_log=os.path.join('.', 'airstriker_ppo_cnnlstmpolicy'))
 
 model.learn(total_timesteps=100000000, callback=callback)
 
